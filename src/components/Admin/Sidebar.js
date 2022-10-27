@@ -11,6 +11,7 @@ import {
 } from "react-pro-sidebar";
 import "react-pro-sidebar/dist/css/styles.css";
 import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export const Sidebar = ({ collapsed, toggled, handleToggleSidebar }) => {
   return (
@@ -33,7 +34,11 @@ export const Sidebar = ({ collapsed, toggled, handleToggleSidebar }) => {
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
             }}>
-            Q&A
+            <NavLink
+              to="/"
+              className="text-xl no-underline text-white font-bold">
+              Q&A
+            </NavLink>
           </div>
         </SidebarHeader>
 

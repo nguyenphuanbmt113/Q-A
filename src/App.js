@@ -7,12 +7,18 @@ import { Admin } from "./components/Admin/Admin";
 import { ManageUser } from "./components/Admin/ManageUser/ManageUser";
 import { ManageQuiz } from "./components/Admin/ManageQuiz/ManageQuiz";
 import { ManageQuestion } from "./components/Admin/ManagaQuestion/ManageQuestion";
+
+import { ToastContainer } from "react-toastify";
+import { SignIn } from "./components/Auth/SignIn";
+import { SignUp } from "./components/Auth/SignUp";
 const App = () => {
   return (
     <>
       <Routes>
         <Route path="/" element={<NavBar></NavBar>}>
           <Route path="/home" element={<Home></Home>}></Route>
+          <Route path="/sign-in" element={<SignIn></SignIn>}></Route>
+          <Route path="/sign-up" element={<SignUp></SignUp>}></Route>
         </Route>
         <Route path="/admin" element={<Admin></Admin>}>
           <Route
@@ -24,6 +30,16 @@ const App = () => {
             element={<ManageQuestion></ManageQuestion>}></Route>
         </Route>
       </Routes>
+      <ToastContainer
+        position="top-right"
+        autoClose={1500}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        draggable
+        pauseOnHover={false}
+        theme="light"></ToastContainer>
     </>
   );
 };

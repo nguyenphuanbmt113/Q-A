@@ -5,6 +5,8 @@ import reportWebVitals from "./reportWebVitals";
 import "./index.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
+
 ReactDOM.render(
   <React.StrictMode>
     <Router>

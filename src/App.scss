@@ -26,8 +26,13 @@ label,
 button {
   cursor: pointer;
 }
-a {
+.navbar-nav a {
   text-decoration: none !important;
+  color: white;
+
+  &:hover {
+    color: gray;
+  }
 }
 img {
   display: block;

@@ -6,12 +6,10 @@ import { MdPendingActions } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
 import ReactPaginate from "react-paginate";
 export const TableUser = (props) => {
-  let { listUser, totalPages, handleClick, handleDelete } = props;
+  let { listUser, totalPages, handleClick, handleDelete, handleUpdate } = props;
+  // const handleClick = (e) => {};
   return (
     <>
-      <div className="text-center underline text-xl mb-3 font-serif font-medium">
-        Manage User
-      </div>
       <table className="table table-hover table-bordered">
         <thead>
           <tr>
@@ -52,7 +50,9 @@ export const TableUser = (props) => {
                       onClick={() => handleDelete(item)}>
                       <AiOutlineDelete size="20px"></AiOutlineDelete>
                     </button>
-                    <button className="px-2 py-2 rounded-full bg-blue-500 text-white">
+                    <button
+                      className="px-2 py-2 rounded-full bg-blue-500 text-white"
+                      onClick={() => handleUpdate(item)}>
                       <FiEdit size="20px"></FiEdit>
                     </button>
                     <button className="px-2 py-2 rounded-full bg-yellow-500 text-white">

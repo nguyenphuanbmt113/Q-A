@@ -11,7 +11,13 @@ function NavBar() {
     <>
       <Navbar bg="dark" expand="lg" variant="dark">
         <Container>
-          <Navbar.Brand>Q&A</Navbar.Brand>
+          <Navbar.Brand>
+            <NavLink
+              to="/"
+              className="text-xl no-underline text-white font-bold">
+              Q&A
+            </NavLink>
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
@@ -43,7 +49,7 @@ function NavBar() {
                   <NavLink to="/sign-up">Sign Up</NavLink>
                 </button>
               </div>
-              <NavDropdown
+              {/* <NavDropdown
                 title={
                   <div className="flex gap-1 items-center">
                     <FiSettings className="inline-block text-xl"></FiSettings>
@@ -56,7 +62,7 @@ function NavBar() {
                 <NavDropdown.Item>Code</NavDropdown.Item>
                 <NavDropdown.Divider />
                 <NavDropdown.Item>Actions</NavDropdown.Item>
-              </NavDropdown>
+              </NavDropdown> */}
             </Nav>
           </Navbar.Collapse>
         </Container>
