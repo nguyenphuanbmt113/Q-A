@@ -19,7 +19,9 @@ const App = () => {
             path="manage-users"
             element={<ManageUser></ManageUser>}></Route>
           <Route path="manage-quiz" element={<ManageQuiz></ManageQuiz>}></Route>
-          <Route path="manage-question" element={<ManageQuestion></ManageQuestion>}></Route>
+          <Route
+            path="manage-question"
+            element={<ManageQuestion></ManageQuestion>}></Route>
         </Route>
       </Routes>
     </>

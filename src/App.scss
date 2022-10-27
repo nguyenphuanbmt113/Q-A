@@ -10,9 +10,9 @@ html {
 *:after {
   box-sizing: border-box;
 }
-body {
-  color: white;
-}
+// body {
+//   color: white;
+// }
 input,
 textarea,
 select,
@@ -28,7 +28,6 @@ button {
 }
 a {
   text-decoration: none !important;
-  color: white !important;
 }
 img {
   display: block;
@@ -84,4 +83,7 @@ $highlight-color: #dee2ec;
       color: $highlight-color;
     }
   }
+}
+.page-link {
+  color: black;
 }
