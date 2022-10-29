@@ -42,7 +42,6 @@ const ModalCreateUser = (pros) => {
     //call api
 
     let data = await postCreateUser(email, password, username, role, img);
-    console.log("data", data);
     if (data?.EC === 0) {
       toast.success(data.EM);
       await fetchUserWithPaginate(1);
