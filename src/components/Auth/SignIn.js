@@ -37,6 +37,21 @@ export const SignIn = () => {
       setPassword(location?.state?.password);
     }
   }, [location]);
+
+  useEffect(() => {
+    const keyDownHandler = async (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        await handleSubmitLogin();
+      }
+    };
+
+    document.addEventListener("keydown", keyDownHandler);
+
+    return () => {
+      document.removeEventListener("keydown", keyDownHandler);
+    };
+  }, [handleSubmitLogin]);
   return (
     <>
       <div className="text-xl font-thin p-4">

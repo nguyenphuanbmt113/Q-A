@@ -24,6 +24,7 @@
     "react-scripts": "next",
     "react-toastify": "9.0.8",
     "redux-persist": "6.0.0",
+    "redux-thunk": "2.4.1",
     "styled-components": "^5.3.3",
     "web-vitals": "^1.0.1"
   },

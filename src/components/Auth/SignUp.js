@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
@@ -31,6 +31,29 @@ export const SignUp = () => {
       toast.error(res.EM);
     }
   };
+  useEffect(() => {
+    const keyDownHandler = async (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        const res = await postRegister(email, username, password);
+        if (res.EC === 0) {
+          toast.success(res.EM);
+          navigate("/sign-in", {
+            state: {
+              email,
+              password,
+            },
+          });
+        } else {
+          toast.error(res.EM);
+        }
+      }
+    };
+    document.addEventListener("keydown", keyDownHandler);
+    return () => {
+      document.removeEventListener("keydown", keyDownHandler);
+    };
+  }, [email, password, username]);
   return (
     <>
       <div className="text-xl font-thin p-4">
