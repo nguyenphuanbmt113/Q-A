@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -10,7 +11,18 @@ import { Outlet, NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import { dologout } from "../../redux/slice/userSlice";
 import { logOutUser } from "../../service/apiservice";
+import ModalProfile from "./ModalProfile";
 const NavBar = () => {
+  const [showProfile, setShowProfile] = useState(false);
+  const handleShowProfile = () => {
+    setShowProfile(true);
+  };
+  const handleProfile = () => {
+    handleShowProfile();
+  };
+  const handleCLoseProfile = () => {
+    setShowProfile(false);
+  };
   const dispatch = useDispatch();
   const isAuth = useSelector((state) => state.account.isAuthention);
   const refresh_token = useSelector((state) => state.account.refresh_token);
@@ -27,7 +39,7 @@ const NavBar = () => {
   };
   return (
     <>
-      <Navbar bg="dark" expand="lg" variant="dark">
+      <Navbar bg="dark" expand="xl" variant="dark">
         <Container>
           <Navbar.Brand>
             <NavLink
@@ -40,21 +52,27 @@ const NavBar = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link>
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1 text-white">
                   <BiHome className="text-xl"></BiHome>
-                  <NavLink to="/home">Home</NavLink>
+                  <NavLink to="/home" className="text-white">
+                    Home
+                  </NavLink>
                 </div>
               </Nav.Link>
               <Nav.Link>
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1 text-white">
                   <MdOutlineQuiz className="text-xl"></MdOutlineQuiz>
-                  <NavLink to="/user">User Quiz</NavLink>
+                  <NavLink to="/user" className="text-white">
+                    User Quiz
+                  </NavLink>
                 </div>
               </Nav.Link>
               <Nav.Link>
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1 text-white">
                   <MdOutlineAdminPanelSettings className="text-xl"></MdOutlineAdminPanelSettings>
-                  <NavLink to="/admin">Admin</NavLink>
+                  <NavLink to="/admin" className="text-white">
+                    Admin
+                  </NavLink>
                 </div>
               </Nav.Link>
             </Nav>
@@ -69,17 +87,19 @@ const NavBar = () => {
                   </button>
                 </div>
               ) : (
-                <div className="text-black">
+                <div className="">
                   <NavDropdown
                     title={
-                      <div className="flex gap-1 items-center">
+                      <div className="flex gap-1 items-center text-white">
                         <FiSettings className="inline-block text-xl"></FiSettings>
                         Setting
                       </div>
                     }
                     id="basic-nav-dropdown"
                     className="text-black">
-                    <NavDropdown.Item>Profile</NavDropdown.Item>
+                    <NavDropdown.Item onClick={() => handleProfile()}>
+                      Profile
+                    </NavDropdown.Item>
                     <NavDropdown.Item onClick={() => handleLogout()}>
                       Log Out
                     </NavDropdown.Item>
@@ -98,6 +118,9 @@ const NavBar = () => {
           <Outlet></Outlet>
         </Container>
       </div>
+      <ModalProfile
+        show={showProfile}
+        handleClose={handleCLoseProfile}></ModalProfile>
     </>
   );
 };
