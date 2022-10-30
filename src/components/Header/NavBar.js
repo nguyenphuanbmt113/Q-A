@@ -62,7 +62,7 @@ const NavBar = () => {
               <Nav.Link>
                 <div className="flex items-center gap-1 text-white">
                   <MdOutlineQuiz className="text-xl"></MdOutlineQuiz>
-                  <NavLink to="/user" className="text-white">
+                  <NavLink to="/quiz" className="text-white">
                     User Quiz
                   </NavLink>
                 </div>

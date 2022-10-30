@@ -12,13 +12,16 @@ import { ToastContainer } from "react-toastify";
 import { SignIn } from "./components/Auth/SignIn";
 import { SignUp } from "./components/Auth/SignUp";
 import { UserQuiz } from "./components/User/UserQuiz";
+import { QuizDetail } from "./components/User/QuizDetail";
+import { NotFound } from "./components/NotFound/NotFound";
 const App = () => {
   return (
     <>
       <Routes>
         <Route path="/" element={<NavBar></NavBar>}>
           <Route path="/home" element={<Home></Home>}></Route>
-          <Route path="/user" element={<UserQuiz></UserQuiz>}></Route>
+          <Route path="/quiz" element={<UserQuiz></UserQuiz>}></Route>
+          <Route path="/quiz/:id" element={<QuizDetail></QuizDetail>}></Route>
         </Route>
         <Route path="/sign-in" element={<SignIn></SignIn>}></Route>
         <Route path="/sign-up" element={<SignUp></SignUp>}></Route>
@@ -31,6 +34,7 @@ const App = () => {
             path="manage-question"
             element={<ManageQuestion></ManageQuestion>}></Route>
         </Route>
+        <Route path="*" element={<NotFound></NotFound>}></Route>
       </Routes>
       <ToastContainer
         position="top-right"

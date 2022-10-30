@@ -51,7 +51,7 @@ export const SignIn = () => {
     return () => {
       document.removeEventListener("keydown", keyDownHandler);
     };
-  }, [handleSubmitLogin]);
+  }, []);
   return (
     <>
       <div className="text-xl font-thin p-4">

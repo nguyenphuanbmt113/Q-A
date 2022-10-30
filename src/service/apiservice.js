@@ -68,6 +68,9 @@ const getAllQuizForAdmin = () => {
 const getQuizByUser = () => {
   return axios.get("/api/v1/quiz-by-participant");
 };
+const getDetailQuiz = (id) => {
+  return axios.get(`/api/v1/questions-by-quiz?quizId=${id}`);
+};
 export {
   getAllUser,
   getUserWithPaginate,
@@ -83,4 +86,5 @@ export {
   postRegister,
   getAllQuizForAdmin,
   getQuizByUser,
+  getDetailQuiz,
 };

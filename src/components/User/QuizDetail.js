@@ -5,3 +5,4 @@ export const QuizDetail = () => {
     <div>QuizDetail</div>
   )
 }
+ 
