@@ -71,6 +71,9 @@ const getQuizByUser = () => {
 const getDetailQuiz = (id) => {
   return axios.get(`/api/v1/questions-by-quiz?quizId=${id}`);
 };
+const postSubmit = (data) => {
+  return axios.post(`api/v1/quiz-submit`, { ...data });
+};
 export {
   getAllUser,
   getUserWithPaginate,
@@ -87,4 +90,5 @@ export {
   getAllQuizForAdmin,
   getQuizByUser,
   getDetailQuiz,
+  postSubmit,
 };
