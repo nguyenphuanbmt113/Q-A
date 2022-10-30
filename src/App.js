@@ -11,12 +11,14 @@ import { ManageQuestion } from "./components/Admin/ManagaQuestion/ManageQuestion
 import { ToastContainer } from "react-toastify";
 import { SignIn } from "./components/Auth/SignIn";
 import { SignUp } from "./components/Auth/SignUp";
+import { UserQuiz } from "./components/User/UserQuiz";
 const App = () => {
   return (
     <>
       <Routes>
         <Route path="/" element={<NavBar></NavBar>}>
           <Route path="/home" element={<Home></Home>}></Route>
+          <Route path="/user" element={<UserQuiz></UserQuiz>}></Route>
         </Route>
         <Route path="/sign-in" element={<SignIn></SignIn>}></Route>
         <Route path="/sign-up" element={<SignUp></SignUp>}></Route>

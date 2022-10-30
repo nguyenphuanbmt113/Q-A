@@ -62,6 +62,12 @@ const getHistory = () => {
 const getQuizWithQA = (quizId) => {
   return axios.get(`api/v1/quiz-with-qa/${quizId}`);
 };
+const getAllQuizForAdmin = () => {
+  return axios.get("api/v1/quiz/all");
+};
+const getQuizByUser = () => {
+  return axios.get("/api/v1/quiz-by-participant");
+};
 export {
   getAllUser,
   getUserWithPaginate,
@@ -75,4 +81,6 @@ export {
   getQuizWithQA,
   postUpdateProfile,
   postRegister,
+  getAllQuizForAdmin,
+  getQuizByUser,
 };
