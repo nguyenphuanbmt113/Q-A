@@ -1,21 +1,26 @@
+import _ from "lodash";
 import React, { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { getDetailQuiz, postSubmit } from "../../service/apiservice";
-import _ from "lodash";
+import ModalResult from "./ModalResult";
 import { Questions } from "./Questions";
 import { RightContent } from "./RightContent";
-import ModalResult from "./ModalResult";
 export const QuizDetail = () => {
   const { id } = useParams();
   const location = useLocation();
+  console.log("location", location);
   const [dataQuiz, setDataQuiz] = useState([]);
   const [show, setShow] = useState(false);
   const [index, setIndex] = useState(0);
   const [modalDataResult, setModalDataResult] = useState({});
   useEffect(() => {
+    return () => {
+      window.confirm("are you sure chnage url");
+    };
+  }, [location]);
+  useEffect(() => {
     const fetchQuestions = async () => {
       let res = await getDetailQuiz(id);
-      console.log("res", res);
       if (res?.EC === 0) {
         const data = res?.DT;
         let questionDescription;
@@ -86,7 +91,7 @@ export const QuizDetail = () => {
             userAnswerId.push(a.id);
           }
         });
-        answers.push({
+        answers.push({ 
           questionId: +questionId,
           userAnswerId,
         });
