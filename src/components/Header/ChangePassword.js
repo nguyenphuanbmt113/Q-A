@@ -8,7 +8,6 @@ export const ChangePassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const account = useSelector((state) => state?.account);
-  console.log("account", account)
   const handleChangePassword = async () => {
     if (newPassword === confirmPassword) {
       const res = await postChangePassword(currentPassword, newPassword);

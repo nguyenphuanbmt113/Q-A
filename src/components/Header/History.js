@@ -6,7 +6,6 @@ import { getHistory } from "../../service/apiservice";
 export const History = () => {
   const [dataHistory, setDataHistory] = useState([]);
   const username = useSelector((state) => state?.account.username);
-  console.log("name", username);
   useEffect(() => {
     fetchHistory();
   }, []);

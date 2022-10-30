@@ -33,7 +33,6 @@ export const UpdateInfomation = ({ handleClose }) => {
       toast.success(res.EM);
       handleClose();
     }
-    console.log("res:", res);
   };
   return (
     <>
