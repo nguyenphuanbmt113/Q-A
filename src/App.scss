@@ -17,7 +17,7 @@ input,
 textarea,
 select,
 button {
-  outline: none;
+  outline: none !important;
 }
 input {
   line-height: normal;
@@ -91,4 +91,9 @@ $highlight-color: #dee2ec;
 }
 .page-link {
   color: black;
+}
+.lb-container .lb-canvas {
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
 }

@@ -37,7 +37,7 @@ export const UpdateInfomation = ({ handleClose }) => {
   return (
     <>
       <form className="row g-3">
-        <div className="col-md-6">
+        <div className="col-6">
           <label className="form-label">Email</label>
           <input
             type="email"
@@ -48,7 +48,7 @@ export const UpdateInfomation = ({ handleClose }) => {
           />
         </div>
 
-        <div className="col-md-6">
+        <div className="col-6">
           <label className="form-label">UserName</label>
           <input
             type="text"
@@ -57,7 +57,7 @@ export const UpdateInfomation = ({ handleClose }) => {
             onChange={(e) => setUserName(e.target.value)}
           />
         </div>
-        <div className="col-md-6">
+        <div className="col-6">
           <label className="form-label">Role</label>
           <select value={role} className="form-select" disabled>
             <option selected value="User">
@@ -66,7 +66,7 @@ export const UpdateInfomation = ({ handleClose }) => {
             <option>Admin</option>
           </select>
         </div>
-        <div className="col-md-6">
+        <div className="col-6">
           <label className="form-label">Image</label>
           <input
             type="file"
@@ -75,7 +75,7 @@ export const UpdateInfomation = ({ handleClose }) => {
           />
         </div>
         <label>Image Preview:</label>
-        <div className="col-md-2 img-preview p-2">
+        <div className="col-2 img-preview p-2">
           <img
             src={previewImg}
             alt=""

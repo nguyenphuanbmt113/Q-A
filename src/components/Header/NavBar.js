@@ -79,10 +79,10 @@ const NavBar = () => {
             <Nav>
               {!isAuth ? (
                 <div className="flex gap-3">
-                  <button className="px-3 py-1 rounded-md bg-red-500 text-white">
+                  <button className="px-3 py-1 rounded-lg bg-red-500 text-white">
                     <NavLink to="/sign-in">Sign In</NavLink>
                   </button>
-                  <button className="px-3 py-1 rounded-md bg-blue-500 text-white">
+                  <button className="px-3 py-1 rounded-lg bg-blue-500 text-white">
                     <NavLink to="/sign-up">Sign Up</NavLink>
                   </button>
                 </div>

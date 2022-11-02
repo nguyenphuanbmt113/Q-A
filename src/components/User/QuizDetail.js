@@ -52,7 +52,7 @@ export const QuizDetail = () => {
   const handleNext = () => {
     setIndex(index + 1);
   };
-  const handleCheckBox = (answerId, questionId) => {
+  const handleCheckBox = (value, answerId, questionId) => {
     let dataQuizClone = _.cloneDeep(dataQuiz);
     let question = dataQuizClone.find(
       (item) => +item.questionId === +questionId
@@ -61,7 +61,7 @@ export const QuizDetail = () => {
       if (question && question.answers) {
         let result = question.answers.map((item) => {
           if (item.id === answerId) {
-            item.isSelected = !item.isSelected;
+            item.isSelected = value;
           }
           return item;
         });
@@ -91,7 +91,7 @@ export const QuizDetail = () => {
             userAnswerId.push(a.id);
           }
         });
-        answers.push({ 
+        answers.push({
           questionId: +questionId,
           userAnswerId,
         });

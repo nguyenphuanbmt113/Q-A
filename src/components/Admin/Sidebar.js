@@ -19,7 +19,7 @@ export const Sidebar = ({ collapsed, toggled, handleToggleSidebar }) => {
       <ProSidebar
         collapsed={collapsed}
         toggled={toggled}
-        breakPoint="md"
+        breakPoint="sm"
         onToggle={handleToggleSidebar}>
         <SidebarHeader>
           <div

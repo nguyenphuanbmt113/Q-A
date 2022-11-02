@@ -69,7 +69,7 @@ const ModalCreateUser = (pros) => {
         </Modal.Header>
         <Modal.Body>
           <form className="row g-3">
-            <div className="col-md-6">
+            <div className="col-6">
               <label className="form-label">Email</label>
               <input
                 type="email"
@@ -78,7 +78,7 @@ const ModalCreateUser = (pros) => {
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            <div className="col-md-6">
+            <div className="col-6">
               <label className="form-label">Password</label>
               <input
                 type="password"
@@ -87,7 +87,7 @@ const ModalCreateUser = (pros) => {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <div className="col-md-6">
+            <div className="col-6">
               <label className="form-label">UserName</label>
               <input
                 type="text"
@@ -96,7 +96,7 @@ const ModalCreateUser = (pros) => {
                 onChange={(e) => setUserName(e.target.value)}
               />
             </div>
-            <div className="col-md-6">
+            <div className="col-6">
               <label className="form-label">Role</label>
               <select
                 value={role}
@@ -108,7 +108,7 @@ const ModalCreateUser = (pros) => {
                 <option>Admin</option>
               </select>
             </div>
-            <div className="col-md-6">
+            <div className="col-6">
               <label className="form-label">Image</label>
               <input
                 type="file"
@@ -117,7 +117,7 @@ const ModalCreateUser = (pros) => {
               />
             </div>
             <label>Image Preview:</label>
-            <div className="col-md-2 img-preview p-2">
+            <div className="col-2 img-preview p-2">
               <img
                 src={previewImg}
                 alt=""

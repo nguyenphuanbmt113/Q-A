@@ -16,7 +16,7 @@ export const UserQuiz = () => {
     }
   };
   return (
-    <div className="mt-5 max-w-[1400px] mx-auto px-3 grid grid-cols-2 md:grid-cols-4 gap-5">
+    <div className="mt-5 max-w-[1400px] mx-auto px-3 grid grid-cols-2 sm:grid-cols-4 gap-5">
       {arrQuiz.length > 0 &&
         arrQuiz.map((item, index) => {
           return (
@@ -32,7 +32,7 @@ export const UserQuiz = () => {
               <div className="card-body flex flex-col absolute bottom-1 text-white">
                 <h5 className="card-title">Quiz {index + 1}</h5>
                 <p className="card-text">{item.description}</p>
-                <div className="mt-auto rounded-md">
+                <div className="mt-auto rounded-sm">
                   <button
                     className="px-2 py-2 bg-blue-500 text-white hover:bg-blue-400"
                     onClick={() =>

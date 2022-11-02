@@ -2,8 +2,8 @@ import React from "react";
 import _ from "lodash";
 export const Questions = (props) => {
   const { data, index, handleCheckBox } = props;
-  const ClickCheckBox = (e, aid, qid) => {
-    handleCheckBox(aid, qid);
+  const ClickCheckBox = (value, aid, qid) => {
+    handleCheckBox(value, aid, qid);
   };
   if (_.isEmpty(data)) {
     return <></>;
@@ -33,7 +33,9 @@ export const Questions = (props) => {
                     type="checkbox"
                     checked={a.isSelected}
                     id="flexCheckDefault"
-                    onChange={(e) => ClickCheckBox(e, a.id, data.questionId)}
+                    onChange={(e) =>
+                      ClickCheckBox(e.target.checked, a.id, data.questionId)
+                    }
                   />
                   <label class="form-check-label" for="flexCheckDefault">
                     {a.description}
