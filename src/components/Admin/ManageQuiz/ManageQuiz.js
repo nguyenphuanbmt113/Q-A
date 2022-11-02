@@ -2,7 +2,9 @@ import React from "react";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { AddNewQuiz } from "./AddNewQuiz";
+import { AssignToUsers } from "./AssignToUsers";
 import { QuizTable } from "./QuizTable";
+import { UpdateQA } from "./UpdateQA";
 export const ManageQuiz = () => {
   return (
     <>
@@ -20,6 +22,12 @@ export const ManageQuiz = () => {
         </Tab>
         <Tab eventKey="Table Quiz" title="Table Quiz">
           <QuizTable></QuizTable>
+        </Tab>
+        <Tab eventKey="Update Q&A" title="Update Q&A">
+          <UpdateQA></UpdateQA>
+        </Tab>
+        <Tab eventKey="Assign to Users" title="Assign to Users">
+          <AssignToUsers></AssignToUsers>
         </Tab>
       </Tabs>
     </>

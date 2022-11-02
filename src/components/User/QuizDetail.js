@@ -8,7 +8,6 @@ import { RightContent } from "./RightContent";
 export const QuizDetail = () => {
   const { id } = useParams();
   const location = useLocation();
-  console.log("location", location);
   const [dataQuiz, setDataQuiz] = useState([]);
   const [show, setShow] = useState(false);
   const [index, setIndex] = useState(0);

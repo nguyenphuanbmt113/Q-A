@@ -18,7 +18,6 @@ export const QuizTable = () => {
   }, []);
   const fetchQuiz = async () => {
     let res = await getAllQuizForAdmin();
-    console.log("res", res);
     if (res && res.EC === 0) {
       setListQuiz(res.DT);
     }
