@@ -1,9 +1,14 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { getAllQuizForAdmin, getAllUser } from "../../../service/apiservice";
+import {
+  getAllQuizForAdmin,
+  getAllUser,
+  postAssignToUser,
+} from "../../../service/apiservice";
 import { CgAssign } from "react-icons/cg";
 import Select from "react-select";
+import { toast } from "react-toastify";
 export const AssignToUsers = () => {
   const [listQuiz, setListQuiz] = useState([]);
   const [selectQuiz, setSelectQuiz] = useState({});
@@ -37,6 +42,17 @@ export const AssignToUsers = () => {
       setListUser(newUser);
     }
   };
+  const handleAssigntoUser = async () => {
+    const data = await postAssignToUser(selectQuiz.value, selectUser.value);
+    if (data?.EC === 0) {
+      toast.success(data.EM);
+      setSelectQuiz({});
+      setSelectUser({});
+    }
+    if (data?.EC !== 0) {
+      toast.error(data.EM);
+    }
+  };
   return (
     <>
       <div className="row">
@@ -44,6 +60,7 @@ export const AssignToUsers = () => {
           <label className="form-label mb-2">Select Quiz</label>
           <Select
             defaultValue={selectQuiz}
+            value={selectQuiz}
             onChange={setSelectQuiz}
             options={listQuiz}
             placeholder="Select Quiz"
@@ -53,6 +70,7 @@ export const AssignToUsers = () => {
           <label className="form-label mb-2">Select User</label>
           <Select
             defaultValue={selectUser}
+            value={selectUser}
             onChange={setSelectUser}
             options={listUser}
             placeholder="Select USeer"
@@ -60,7 +78,9 @@ export const AssignToUsers = () => {
           />
         </div>
       </div>
-      <button className="flex gap-2 px-3 py-2 bg-blue-500 text-white rounded-md items-center">
+      <button
+        className="flex gap-2 px-3 py-2 bg-blue-500 text-white rounded-md items-center"
+        onClick={() => handleAssigntoUser()}>
         <CgAssign size="25px"></CgAssign>
         <div>Assign</div>
       </button>

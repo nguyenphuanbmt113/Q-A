@@ -1,18 +1,19 @@
-import _ from "lodash";
-import React, { useEffect, useState } from "react";
-import Lightbox from "react-awesome-lightbox";
-import { AiOutlinePlusSquare } from "react-icons/ai";
+import React, { useState } from "react";
+import Select from "react-select";
 import { BsPlusCircle } from "react-icons/bs";
 import { CgRemove } from "react-icons/cg";
-import { GrDocumentUpload } from "react-icons/gr";
-import Select from "react-select";
+import { AiOutlinePlusSquare } from "react-icons/ai";
 import { v4 as uuidv4 } from "uuid";
+import _ from "lodash";
+import { GrDocumentUpload } from "react-icons/gr";
+import Lightbox from "react-awesome-lightbox";
+import { useEffect } from "react";
 import {
-  getAllQuizForAdmin, getQAByQuiz,
+  getAllQuizForAdmin,
   postCreateQuestion,
-  postNewAnswerForQuestion
+  postNewAnswerForQuestion,
 } from "../../../service/apiservice";
-export const UpdateQA = () => {
+export const CreateQuestionForQuiz = () => {
   const [selectQuiz, setSelectQuiz] = useState({});
   const [isPreview, setIsPreview] = useState(false);
   const [dataPreview, setDataPreview] = useState("");
@@ -180,16 +181,10 @@ export const UpdateQA = () => {
       setListQuiz(newQuiz);
     }
   };
-  const fetchGetDataQ = async () => {
-    const res = await getQAByQuiz(selectQuiz.value);
-  };
-  useEffect(() => {
-    fetchGetDataQ();
-  }, [selectQuiz]);
   return (
     <div>
       <div className="text-2xl font-serif font-medium mb-3">
-        Manage Question
+        Create Question
       </div>
       <div className="add-new-question col-3 mb-3">
         <label className="form-label mb-2">Select Quiz</label>

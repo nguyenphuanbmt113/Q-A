@@ -8,7 +8,6 @@ import ModalUpdateUser from "./ModalUpdateUser";
 import { TableUser } from "./TableUser";
 export const ManageUser = () => {
   const [listUser, setListUser] = useState([]);
-  console.log("listUser", listUser)
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [showModalDelete, setShowModalDelete] = useState(false);

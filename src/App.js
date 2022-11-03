@@ -6,7 +6,6 @@ import { Home } from "./components/Home";
 import { Admin } from "./components/Admin/Admin";
 import { ManageUser } from "./components/Admin/ManageUser/ManageUser";
 import { ManageQuiz } from "./components/Admin/ManageQuiz/ManageQuiz";
-import { ManageQuestion } from "./components/Admin/ManagaQuestion/ManageQuestion";
 
 import { ToastContainer } from "react-toastify";
 import { SignIn } from "./components/Auth/SignIn";
@@ -14,6 +13,7 @@ import { SignUp } from "./components/Auth/SignUp";
 import { UserQuiz } from "./components/User/UserQuiz";
 import { QuizDetail } from "./components/User/QuizDetail";
 import { NotFound } from "./components/NotFound/NotFound";
+import { ManageQuestion } from "./components/Admin/ManagaQuestion/ManageQuestion";
 const App = () => {
   return (
     <>

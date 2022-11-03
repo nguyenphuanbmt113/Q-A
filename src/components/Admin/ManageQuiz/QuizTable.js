@@ -52,12 +52,12 @@ export const QuizTable = () => {
 
                   <td className="flex gap-2">
                     <button
-                      className=" bg-yellow-500 text-white  p-2"
+                      className=" bg-yellow-500 text-white  p-2 rounded-md"
                       onClick={() => handleOpen(item)}>
                       Edit
                     </button>
                     <button
-                      className="bg-red-500 text-white p-2"
+                      className="bg-red-500 text-white p-2 rounded-md"
                       onClick={() => handleDeleteQuiz(item.id)}>
                       Delete
                     </button>

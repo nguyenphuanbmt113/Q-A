@@ -121,20 +121,18 @@ const postAssignQuiz = (quizId, userId) => {
   });
 };
 const deleteQuestion = (id, quizId) => {
-  return axios.delete("api/v1/question", {
-    id,
-    quizId,
-  });
+  return axios.delete("api/v1/question", { data: { id, quizId } });
 };
-const putUpdateQuestion = (quiz_id, description, questionImage) => {
+const putUpdateQuestion = (id, quiz_id, description, questionImage) => {
   const form = new FormData();
+  form.append("id", id);
   form.append("quiz_id", quiz_id);
   form.append("description", description);
   form.append("questionImage", questionImage);
   return axios.put("api/v1/question", form);
 };
 const postAssignToUser = (quizId, userId) => {
-  return axios.delete("api/v1/quiz-assign-to-user", {
+  return axios.post("api/v1/quiz-assign-to-user", {
     quizId,
     userId,
   });
