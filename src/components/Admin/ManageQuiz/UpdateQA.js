@@ -8,9 +8,10 @@ import { GrDocumentUpload } from "react-icons/gr";
 import Select from "react-select";
 import { v4 as uuidv4 } from "uuid";
 import {
-  getAllQuizForAdmin, getQAByQuiz,
+  getAllQuizForAdmin,
+  getQAByQuiz,
   postCreateQuestion,
-  postNewAnswerForQuestion
+  postNewAnswerForQuestion,
 } from "../../../service/apiservice";
 export const UpdateQA = () => {
   const [selectQuiz, setSelectQuiz] = useState({});
@@ -182,6 +183,10 @@ export const UpdateQA = () => {
   };
   const fetchGetDataQ = async () => {
     const res = await getQAByQuiz(selectQuiz.value);
+    console.log("res", res);
+    if (res.EC === 0) {
+      setQuestions(res.DT.qa);
+    }
   };
   useEffect(() => {
     fetchGetDataQ();

@@ -112,7 +112,7 @@ const getAllQA = () => {
   return axios.get(`api/v1/question/all`);
 };
 const getQAByQuiz = (quizId) => {
-  return axios.get(`api/v1/questions-by-quiz?quizId=${quizId}`);
+  return axios.get(`api/v1/quiz-with-qa/${quizId}`);
 };
 const postAssignQuiz = (quizId, userId) => {
   return axios.post("api/v1/quiz-assign-to-user", {
