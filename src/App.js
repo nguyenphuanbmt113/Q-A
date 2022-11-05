@@ -14,6 +14,7 @@ import { UserQuiz } from "./components/User/UserQuiz";
 import { QuizDetail } from "./components/User/QuizDetail";
 import { NotFound } from "./components/NotFound/NotFound";
 import { ManageQuestion } from "./components/Admin/ManagaQuestion/ManageQuestion";
+import { PrivateRouter } from "./router/PrivateRouter";
 const App = () => {
   return (
     <>
@@ -25,7 +26,13 @@ const App = () => {
         </Route>
         <Route path="/sign-in" element={<SignIn></SignIn>}></Route>
         <Route path="/sign-up" element={<SignUp></SignUp>}></Route>
-        <Route path="/admin" element={<Admin></Admin>}>
+        <Route
+          path="/admin"
+          element={
+            <PrivateRouter>
+              <Admin></Admin>
+            </PrivateRouter>
+          }>
           <Route
             path="manage-users"
             element={<ManageUser></ManageUser>}></Route>
