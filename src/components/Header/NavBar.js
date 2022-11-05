@@ -44,7 +44,7 @@ const NavBar = () => {
           <Navbar.Brand>
             <NavLink
               to="/"
-              className="text-xl no-underline text-white font-bold">
+              className="text-xl no-underline text-white font-bold p-2 border border-white rounded-md">
               Q&A
             </NavLink>
           </Navbar.Brand>

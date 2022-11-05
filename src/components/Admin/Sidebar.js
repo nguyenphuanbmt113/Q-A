@@ -36,7 +36,7 @@ export const Sidebar = ({ collapsed, toggled, handleToggleSidebar }) => {
             }}>
             <NavLink
               to="/"
-              className="text-xl no-underline text-white font-bold">
+              className="text-xl no-underline text-white font-bold p-2 border border-white rounded-md">
               Q&A
             </NavLink>
           </div>
@@ -49,7 +49,7 @@ export const Sidebar = ({ collapsed, toggled, handleToggleSidebar }) => {
               Dashboard <Link to="/admin"></Link>
             </MenuItem>
           </Menu>
-          <Menu iconShape="circle">
+          <Menu iconShape="round">
             <SubMenu
               title="Features"
               icon={<AiOutlineBell size="md"></AiOutlineBell>}>

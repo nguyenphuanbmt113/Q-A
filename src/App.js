@@ -15,6 +15,7 @@ import { QuizDetail } from "./components/User/QuizDetail";
 import { NotFound } from "./components/NotFound/NotFound";
 import { ManageQuestion } from "./components/Admin/ManagaQuestion/ManageQuestion";
 import { PrivateRouter } from "./router/PrivateRouter";
+import { DashBoard } from "./components/Admin/DashBoard";
 const App = () => {
   return (
     <>
@@ -33,6 +34,9 @@ const App = () => {
               <Admin></Admin>
             </PrivateRouter>
           }>
+          <Route
+            path="/admin"
+            element={<DashBoard></DashBoard>}></Route>
           <Route
             path="manage-users"
             element={<ManageUser></ManageUser>}></Route>
