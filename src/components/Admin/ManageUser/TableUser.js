@@ -51,7 +51,8 @@ export const TableUser = (props) => {
                       <AiOutlineDelete size="20px"></AiOutlineDelete>
                     </button>
                     <button
-                      className="px-2 py-2 rounded-full bg-blue-500 text-white"
+                      className="px-2 py-2 rounded-
+                       bg-blue-500 text-white"
                       onClick={() => handleUpdate(item)}>
                       <FiEdit size="20px"></FiEdit>
                     </button>

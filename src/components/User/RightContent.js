@@ -1,14 +1,29 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import { CountDowm } from "./CountDowm";
 // import { CountDowm } from "./CountDowm";
 
 export const RightContent = (props) => {
-  const { dataQuiz, setIndex } = props;
-  const [current, setCurrent] = useState(false);
-  const handleSelectQuestion = (a) => {
-    setIndex(a);
-    setCurrent(true);
+  const { dataQuiz, setIndex, currentQ, setCurrentQ } = props;
+  const refdiv = useRef([]);
+  const handleSelectQuestion = (i, question) => {
+    const classList = ["question"];
+    const isSelected = question.answers.find(
+      (answer) => answer.isSelected === true
+    );
+    const isClicked = currentQ === i;
+    if (isSelected) {
+      classList.push("bg-red-500 text-white");
+    }
+    if (isClicked) {
+      classList.push("bg-gray-400 text-black");
+    }
+    return classList.join(" ");
   };
+  const handleClick = (i) => {
+    setCurrentQ(i);
+    setIndex(i);
+  };
+
   return (
     <div>
       <div className="text-3xl text-center">
@@ -21,13 +36,13 @@ export const RightContent = (props) => {
           dataQuiz.map((item, i) => {
             return (
               <div
-                className={
-                  current === true
-                    ? "w-[50px] h-[50px] bg-red-500 text-white rounded-full flex items-center justify-center"
-                    : "w-[50px] h-[50px] text-black rounded-full flex items-center justify-center border-1 border-gray-300"
-                }
-                onClick={() => handleSelectQuestion(i)}
-                key={`question-${i + 1}`}>
+                ref={refdiv.current[i]}
+                className={`${handleSelectQuestion(
+                  i,
+                  item
+                )} border w-10 h-10 rounded-full text-black flex items-center justify-center text-lg`}
+                key={`question-${i + 1}`}
+                onClick={() => handleClick(i)}>
                 {i + 1}
               </div>
             );

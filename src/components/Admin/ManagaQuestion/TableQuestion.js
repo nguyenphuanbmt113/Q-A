@@ -43,7 +43,7 @@ export const QuestionTable = () => {
     setShowImage(true)
   };
   return (
-    <>
+    <div className="h-[70vh] overflow-y-auto hover:overflow-y-scroll">
       <table className="table table-hover table-bordered">
         <thead>
           <tr>
@@ -95,12 +95,16 @@ export const QuestionTable = () => {
             })}
         </tbody>
       </table>
-      {showImage && <Lightbox image={previewImg} onClose={()=>setShowImage(false)}></Lightbox>}
+      {showImage && (
+        <Lightbox
+          image={previewImg}
+          onClose={() => setShowImage(false)}></Lightbox>
+      )}
       <ModalupdateQ
         show={show}
         handleClose={handleClose}
         data={dataUpdate}
         fetchQuestion={fetchQuestion}></ModalupdateQ>
-    </>
+    </div>
   );
 };

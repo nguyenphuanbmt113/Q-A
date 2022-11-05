@@ -1,29 +1,28 @@
 import _ from "lodash";
 import React, { useEffect, useState } from "react";
-import Lightbox from "react-awesome-lightbox";
 import { AiOutlinePlusSquare } from "react-icons/ai";
 import { BsPlusCircle } from "react-icons/bs";
 import { CgRemove } from "react-icons/cg";
 import { GrDocumentUpload } from "react-icons/gr";
 import Select from "react-select";
 import { v4 as uuidv4 } from "uuid";
+import Lightbox from "react-awesome-lightbox";
 import {
   getAllQuizForAdmin,
   getQAByQuiz,
-  postCreateQuestion,
-  postNewAnswerForQuestion,
+  postUpsertWithAQA,
 } from "../../../service/apiservice";
+import { toast } from "react-toastify";
 export const UpdateQA = () => {
-  const [selectQuiz, setSelectQuiz] = useState({});
   const [isPreview, setIsPreview] = useState(false);
   const [dataPreview, setDataPreview] = useState("");
+  const [selectQuiz, setSelectQuiz] = useState({});
   const [listQuiz, setListQuiz] = useState([]);
   const [questions, setQuestions] = useState([
     {
       id: uuidv4(),
       description: "",
       imageFile: "",
-      imagePreview: "",
       imageName: "",
       answers: [
         {
@@ -110,9 +109,6 @@ export const UpdateQA = () => {
     if (index > -1) {
       questionClone[index].imageFile = e.target.files[0];
       questionClone[index].imageName = e.target.files[0].name;
-      questionClone[index].imagePreview = URL.createObjectURL(
-        e.target.files[0]
-      );
       setQuestions(questionClone);
     }
   };
@@ -136,34 +132,41 @@ export const UpdateQA = () => {
     );
     setQuestions(questionClone);
   };
-  const handleSubmitQuestionForQuiz = async () => {
-    await Promise.all(
-      questions.map(async (question) => {
-        const q = await postCreateQuestion(
-          +selectQuiz.value,
-          question.description,
-          question.imageFile
-        );
-        await Promise.all(
-          question.answers.map(async (answer) => {
-            await postNewAnswerForQuestion(
-              answer.description,
-              answer.isCorrect,
-              q.DT.id
-            );
-          })
-        );
-      })
-    );
-  };
   const handlePreviewImage = (questionId) => {
     let questionClone = _.cloneDeep(questions);
     const index = questionClone.findIndex((item) => {
       return item.id === questionId;
     });
     if (index > -1) {
-      setDataPreview(questionClone[index].imagePreview);
+      const result = URL.createObjectURL(questionClone[index].imageFile);
+      setDataPreview(result);
       setIsPreview(true);
+    }
+  };
+  const handleSubmitQuestionForQuiz = async () => {
+    const toBase64 = (file) => {
+      new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      });
+    };
+    let questionClone = _.cloneDeep(questions);
+    for (let i = 0; i < questionClone.length; i++) {
+      if (questionClone[i].imageFile) {
+        questionClone[i].imageFile = await toBase64(questionClone[i].imageFile);
+      }
+    }
+    let res = await postUpsertWithAQA({
+      quizId: selectQuiz.value,
+      questions: questionClone,
+    });
+    if (res.EC === 0) {
+      console.log("res", res);
+      toast.success(res.EM);
+      setSelectQuiz({});
+      setQuestions([]);
     }
   };
   useEffect(() => {
@@ -181,25 +184,57 @@ export const UpdateQA = () => {
       setListQuiz(newQuiz);
     }
   };
-  const fetchGetDataQ = async () => {
-    const res = await getQAByQuiz(selectQuiz.value);
-    console.log("res", res);
-    if (res.EC === 0) {
-      setQuestions(res.DT.qa);
+  const urltoFile = (url, filename, mimeType) => {
+    return fetch(url)
+      .then(function (res) {
+        return res.arrayBuffer();
+      })
+      .then(function (buf) {
+        return new File([buf], filename, { type: mimeType });
+      });
+  };
+
+  useEffect(() => {
+    if (selectQuiz) {
+      const fetchGetDataQ = async () => {
+        const res = await getQAByQuiz(selectQuiz.value);
+        if (res.EC === 0) {
+          let newQ = [];
+          for (let i = 0; i < res.DT.qa.length; i++) {
+            let data = res.DT.qa[i];
+            if (data.imageFile) {
+              data.imageFile = await urltoFile(
+                `data:image/png;base64,${data.imageFile}`,
+                `Question-${data.id}.png`,
+                `image/png`
+              );
+            }
+            newQ.push(data);
+          }
+          setQuestions(newQ);
+          console.log("newQ", newQ);
+        }
+      };
+      fetchGetDataQ();
+    }
+  }, [selectQuiz]);
+  const covertbase = (url) => {
+    if (url) {
+      return URL.createObjectURL(url);
+    } else {
+      return "";
     }
   };
-  useEffect(() => {
-    fetchGetDataQ();
-  }, [selectQuiz]);
   return (
-    <div>
+    <div className="h-[80vh] overflow-y-auto">
       <div className="text-2xl font-serif font-medium mb-3">
-        Manage Question
+        Update and Delete Question
       </div>
       <div className="add-new-question col-3 mb-3">
         <label className="form-label mb-2">Select Quiz</label>
         <Select
           defaultValue={selectQuiz}
+          value={selectQuiz}
           onChange={setSelectQuiz}
           options={listQuiz}
           placeholder="Select Quiz"
@@ -211,7 +246,7 @@ export const UpdateQA = () => {
             <div className="qa-main mb-2" key={question.id}>
               <div className="q-content">
                 <div className="text-lg text-blue-500 underline">
-                  Add Question {index + 1}
+                  Question {index + 1}
                 </div>
                 <div className="row">
                   <div className="col-7">
@@ -271,7 +306,7 @@ export const UpdateQA = () => {
                   className="col-2 p-2"
                   onClick={() => handlePreviewImage(question.id)}>
                   <img
-                    src={`${question.imagePreview}`}
+                    src={covertbase(question?.imageFile) || ""}
                     alt=""
                     className="img-cover rounded-full w-[60%]"
                   />
@@ -331,11 +366,6 @@ export const UpdateQA = () => {
             </div>
           );
         })}
-      <button
-        className="px-3 py-2 bg-blue-500 text-white"
-        onClick={() => handleSubmitQuestionForQuiz()}>
-        Save Create
-      </button>
       {isPreview ? (
         <Lightbox
           image={dataPreview}
@@ -343,6 +373,11 @@ export const UpdateQA = () => {
       ) : (
         ""
       )}
+      <button
+        className="px-3 py-2 bg-blue-500 text-white"
+        onClick={() => handleSubmitQuestionForQuiz()}>
+        Update Create
+      </button>
     </div>
   );
 };

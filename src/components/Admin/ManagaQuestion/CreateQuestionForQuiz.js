@@ -23,7 +23,6 @@ export const CreateQuestionForQuiz = () => {
       id: uuidv4(),
       description: "",
       imageFile: "",
-      imagePreview: "",
       imageName: "",
       answers: [
         {
@@ -110,9 +109,6 @@ export const CreateQuestionForQuiz = () => {
     if (index > -1) {
       questionClone[index].imageFile = e.target.files[0];
       questionClone[index].imageName = e.target.files[0].name;
-      questionClone[index].imagePreview = URL.createObjectURL(
-        e.target.files[0]
-      );
       setQuestions(questionClone);
     }
   };
@@ -162,7 +158,8 @@ export const CreateQuestionForQuiz = () => {
       return item.id === questionId;
     });
     if (index > -1) {
-      setDataPreview(questionClone[index].imagePreview);
+      const result = URL.createObjectURL(questionClone[index].imageFile);
+      setDataPreview(result);
       setIsPreview(true);
     }
   };
@@ -181,8 +178,13 @@ export const CreateQuestionForQuiz = () => {
       setListQuiz(newQuiz);
     }
   };
+  const covertbase = (url) => {
+    if (url) {
+      return URL.createObjectURL(url);
+    }
+  };
   return (
-    <div>
+    <div className="h-[80vh] overflow-y-auto">
       <div className="text-2xl font-serif font-medium mb-3">
         Create Question
       </div>
@@ -261,10 +263,10 @@ export const CreateQuestionForQuiz = () => {
                   className="col-2 p-2"
                   onClick={() => handlePreviewImage(question.id)}>
                   <img
-                    src={`${question.imagePreview}`}
+                    src={covertbase(question.imageFile)}
                     alt=""
                     className="img-cover rounded-full w-[60%]"
-                  />
+                  />``
                 </div>
               </div>
               {question.answers.map((answer, index) => {

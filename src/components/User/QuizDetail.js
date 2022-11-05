@@ -11,12 +11,8 @@ export const QuizDetail = () => {
   const [dataQuiz, setDataQuiz] = useState([]);
   const [show, setShow] = useState(false);
   const [index, setIndex] = useState(0);
+  const [currentQ, setCurrentQ] = useState(0);
   const [modalDataResult, setModalDataResult] = useState({});
-  useEffect(() => {
-    return () => {
-      window.confirm("are you sure chnage url");
-    };
-  }, [location]);
   useEffect(() => {
     const fetchQuestions = async () => {
       let res = await getDetailQuiz(id);
@@ -150,7 +146,11 @@ export const QuizDetail = () => {
           </div>
         </div>
         <div className="right-content border-gray-300 border-2 w-[30%] p-3">
-          <RightContent dataQuiz={dataQuiz} setIndex={setIndex}></RightContent>
+          <RightContent
+            dataQuiz={dataQuiz}
+            setIndex={setIndex}
+            currentQ={currentQ}
+            setCurrentQ={setCurrentQ}></RightContent>
         </div>
       </div>
       <ModalResult
