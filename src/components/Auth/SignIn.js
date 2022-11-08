@@ -1,29 +1,38 @@
-import React from "react";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { BsArrowBarLeft } from "react-icons/bs";
+import { useDispatch } from "react-redux";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { getUser } from "../../redux/slice/userSlice";
 import { loginUser } from "../../service/apiservice";
-import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import { BsArrowBarLeft } from "react-icons/bs";
-import { NavLink } from "react-router-dom";
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
-export const SignIn = () => {
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+export const SignIn = (props) => {
   const navigate = useNavigate();
-  const location = useLocation();
+  // const location = useLocation();
   const dispath = useDispatch();
-  const [show, setShow] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const handleShow = () => {
-    setShow(!show);
-  };
-  const handleSubmitLogin = async () => {
-    setLoading(true);
-    const data = await loginUser(email, password);
+  const schema = yup
+    .object({
+      email: yup.string().required("No email provided."),
+      password: yup.string().required("No password provided."),
+    })
+    .required();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    resolver: yupResolver(schema),
+  });
+  const onSubmit = async (form) => {
+    // console.log(data);
+    const data = await loginUser(form.email, form.password);
     if (data?.EC === 0) {
       toast.success(data.EM);
       setLoading(false);
@@ -35,27 +44,63 @@ export const SignIn = () => {
       toast.error(data.EM);
     }
   };
-  useEffect(() => {
-    if (location) {
-      setEmail(location?.state?.email);
-      setPassword(location?.state?.password);
-    }
-  }, [location]);
 
+  const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const handleShow = () => {
+    setShow(!show);
+  };
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  // const handleSubmitLogin = async () => {
+  //   setLoading(true);
+  //   const data = await loginUser(email, password);
+  //   if (data?.EC === 0) {
+  //     toast.success(data.EM);
+  //     setLoading(false);
+  //     dispath(getUser(data?.DT));
+  //     navigate("/");
+  //   }
+  //   if (data?.EC !== 0) {
+  //     setLoading(false);
+  //     toast.error(data.EM);
+  //   }
+  // };
+  // useEffect(() => {
+  //   if (location) {
+  //     setEmail(location?.state?.email);
+  //     setPassword(location?.state?.password);
+  //   }
+  // }, [location]);
+
+  // useEffect(() => {
+  //   const keyDownHandler = async (event) => {
+  //     if (event.key === "Enter") {
+  //       event.preventDefault();
+  //       // await handleSubmitLogin();
+  //       await handleSubmit(onSubmit);
+  //     }
+  //   };
+
+  //   document.addEventListener("keydown", keyDownHandler);
+  //   return () => {
+  //     document.removeEventListener("keydown", keyDownHandler);
+  //   };
+  // }, []);
   useEffect(() => {
-    const keyDownHandler = async (event) => {
-      if (event.key === "Enter") {
-        event.preventDefault();
-        await handleSubmitLogin();
+    const keypress = async (e) => {
+      if (e.key === "Enter") {
+        await handleSubmit(onSubmit);
       }
     };
 
-    document.addEventListener("keydown", keyDownHandler);
+    window.addEventListener("keypress", keypress);
 
     return () => {
-      document.removeEventListener("keydown", keyDownHandler);
+      window.removeEventListener("keypress", keypress);
     };
   }, []);
+
   return (
     <>
       <div className="text-xl font-thin p-4">
@@ -77,9 +122,11 @@ export const SignIn = () => {
                 type="email"
                 placeholder="Email"
                 className="w-[100%] p-2 border"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                {...register("email")}
+                // value={email}
+                // onChange={(e) => setEmail(e.target.value)}
               />
+              <p className="text-red-500 text-md">{errors?.email?.message}</p>
             </div>
             <div className="form-group flex flex-col my-3 relative">
               <label htmlFor="" className="mb-2">
@@ -89,9 +136,13 @@ export const SignIn = () => {
                 type={show ? "text" : "password"}
                 placeholder="password"
                 className="w-[100%] p-2 border"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                {...register("password")}
+                // value={password}
+                // onChange={(e) => setPassword(e.target.value)}
               />
+              <p className="text-red-500 text-md">
+                {errors?.password?.message}
+              </p>
               <div
                 className="absolute top-[50%] right-[10px] translate-y-1/2"
                 onClick={() => handleShow()}>
@@ -106,7 +157,7 @@ export const SignIn = () => {
           <div>
             <button
               className="px-3 py-2 bg-red-500 text-white w-[100%]"
-              onClick={() => handleSubmitLogin()}>
+              onClick={handleSubmit(onSubmit)}>
               {!loading ? (
                 <div>Sign In</div>
               ) : (
