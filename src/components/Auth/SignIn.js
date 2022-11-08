@@ -56,11 +56,6 @@ export const SignIn = () => {
       document.removeEventListener("keydown", keyDownHandler);
     };
   }, []);
-  useEffect(() => {
-    return () => {
-      window.confirm("abs");
-    };
-  }, []);
   return (
     <>
       <div className="text-xl font-thin p-4">
