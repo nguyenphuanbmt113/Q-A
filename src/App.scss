@@ -1,5 +1,6 @@
 html {
   box-sizing: border-box;
+  font-family: "poppins";
 }
 * {
   margin: 0;
@@ -10,9 +11,6 @@ html {
 *:after {
   box-sizing: border-box;
 }
-// body {
-//   color: white;
-// }
 input,
 textarea,
 select,
@@ -98,11 +96,11 @@ $highlight-color: #dee2ec;
   margin-right: auto;
 }
 .scrollbar-hide::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 /* For IE, Edge and Firefox */
 .scrollbar-hide {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }

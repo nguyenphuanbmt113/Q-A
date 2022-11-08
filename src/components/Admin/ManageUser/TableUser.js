@@ -5,9 +5,16 @@ import { HiOutlineIdentification } from "react-icons/hi";
 import { MdPendingActions } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
 import ReactPaginate from "react-paginate";
+// import { useNavigate } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 export const TableUser = (props) => {
   let { listUser, totalPages, handleClick, handleDelete, handleUpdate } = props;
   // const handleClick = (e) => {};
+  // const navigate = useNavigate();
+  // const { page: currentPage } = useParams();
+  // const goToNextPage = () => {
+  //   navigate(`../${currentPage + 1}`);
+  // };
   return (
     <>
       <table className="table table-hover table-bordered">

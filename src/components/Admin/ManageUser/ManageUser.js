@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineUserAdd } from "react-icons/ai";
-import { useLocation } from "react-router-dom";
 import { getUserWithPaginate } from "../../../service/apiservice";
 import ModalCreateUser from "./ModalCreateUser";
 import ModalDelete from "./ModalDelete";

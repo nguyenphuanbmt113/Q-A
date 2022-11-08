@@ -139,7 +139,11 @@ const postAssignToUser = (quizId, userId) => {
 const postUpsertWithAQA = (data) => {
   return axios.post("api/v1/quiz-upsert-qa", { ...data });
 };
+const getOverView = () => {
+  return axios.get("api/v1/overview");
+};
 export {
+  getOverView,
   getAllUser,
   getUserWithPaginate,
   deleteUserWithId,

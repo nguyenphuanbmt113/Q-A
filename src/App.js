@@ -34,9 +34,7 @@ const App = () => {
               <Admin></Admin>
             </PrivateRouter>
           }>
-          <Route
-            path="/admin"
-            element={<DashBoard></DashBoard>}></Route>
+          <Route path="/admin" element={<DashBoard></DashBoard>}></Route>
           <Route
             path="manage-users"
             element={<ManageUser></ManageUser>}></Route>
