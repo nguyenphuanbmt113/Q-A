@@ -48,12 +48,10 @@ export const SignIn = (props) => {
   useEffect(() => {
     const keypress = async (e) => {
       if (e.key === "Enter") {
-        await handleSubmit(onSubmit);
+        handleSubmit(onSubmit)();
       }
     };
-
     window.addEventListener("keypress", keypress);
-
     return () => {
       window.removeEventListener("keypress", keypress);
     };
