@@ -4,13 +4,16 @@ import { useForm } from "react-hook-form";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { BsArrowBarLeft } from "react-icons/bs";
 import { useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as yup from "yup";
 import { getUser } from "../../redux/slice/userSlice";
 import { loginUser } from "../../service/apiservice";
-export const SignIn = (props) => {
+export const SignIn = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  console.log("location", location);
   const dispath = useDispatch();
   const schema = yup
     .object({
@@ -20,16 +23,18 @@ export const SignIn = (props) => {
     .required();
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors, isSubmitting, isValid },
   } = useForm({
     defaultValues: {
-      email: "",
-      password: "",
+      email: "user@gmail.com",
+      password: "123456",
     },
     resolver: yupResolver(schema),
     mode: "onChange",
   });
+  // unregister("email");
   const onSubmit = async (form) => {
     if (isValid) {
       const data = await loginUser(form.email, form.password);
@@ -41,6 +46,7 @@ export const SignIn = (props) => {
       if (data?.EC !== 0) {
         toast.error(data.EM);
       }
+      // reset({ email: "", password: "" });
     }
   };
 
@@ -59,6 +65,15 @@ export const SignIn = (props) => {
       window.removeEventListener("keypress", keypress);
     };
   }, []);
+
+  useEffect(() => {
+    if (location) {
+      let defaultValues = {};
+      defaultValues.email = location?.state?.email;
+      defaultValues.password = location?.state?.password;
+      reset({ ...defaultValues });
+    }
+  }, [location, reset]);
 
   return (
     <>

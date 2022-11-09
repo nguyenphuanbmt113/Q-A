@@ -43,6 +43,8 @@ const NavBar = () => {
         <Container>
           <Navbar.Brand>
             <NavLink
+              id="RouterNavLink"
+              // style={None}
               to="/"
               className="text-xl no-underline text-white font-bold p-2 border border-white rounded-md">
               Q&A

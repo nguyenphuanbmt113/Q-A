@@ -266,7 +266,7 @@ export const CreateQuestionForQuiz = () => {
                     src={covertbase(question.imageFile)}
                     alt=""
                     className="img-cover rounded-full w-[60%]"
-                  />``
+                  />
                 </div>
               </div>
               {question.answers.map((answer, index) => {
