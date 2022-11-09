@@ -28,16 +28,19 @@ export const SignIn = (props) => {
       password: "",
     },
     resolver: yupResolver(schema),
+    mode: "onChange",
   });
   const onSubmit = async (form) => {
-    const data = await loginUser(form.email, form.password);
-    if (data?.EC === 0) {
-      toast.success(data.EM);
-      dispath(getUser(data?.DT));
-      navigate("/");
-    }
-    if (data?.EC !== 0) {
-      toast.error(data.EM);
+    if (isValid) {
+      const data = await loginUser(form.email, form.password);
+      if (data?.EC === 0) {
+        toast.success(data.EM);
+        dispath(getUser(data?.DT));
+        navigate("/");
+      }
+      if (data?.EC !== 0) {
+        toast.error(data.EM);
+      }
     }
   };
 
