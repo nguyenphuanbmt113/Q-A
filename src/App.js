@@ -16,11 +16,13 @@ import { NotFound } from "./components/NotFound/NotFound";
 import { ManageQuestion } from "./components/Admin/ManagaQuestion/ManageQuestion";
 import { PrivateRouter } from "./router/PrivateRouter";
 import { DashBoard } from "./components/Admin/DashBoard";
+import { Intro } from "./pages/Intro";
 const App = () => {
   return (
     <>
       <Routes>
         <Route path="/" element={<NavBar></NavBar>}>
+          <Route path="/" element={<Intro></Intro>}></Route>
           <Route path="/home" element={<Home></Home>}></Route>
           <Route path="/quiz" element={<UserQuiz></UserQuiz>}></Route>
           <Route path="/quiz/:id" element={<QuizDetail></QuizDetail>}></Route>

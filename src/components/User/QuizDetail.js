@@ -9,6 +9,7 @@ export const QuizDetail = () => {
   const { id } = useParams();
   const location = useLocation();
   const [dataQuiz, setDataQuiz] = useState([]);
+  console.log("dataQuiz", dataQuiz)
   const [show, setShow] = useState(false);
   const [index, setIndex] = useState(0);
   const [currentQ, setCurrentQ] = useState(0);
@@ -110,6 +111,7 @@ export const QuizDetail = () => {
   };
   return (
     <>
+      {dataQuiz.length === 0 ? <div>Dont have any questions</div> :
       <div className="flex gap-5">
         <div className="left-content border-gray-300 w-[70%] border-2 p-3">
           <div className="title text-xl bold capitalize">
@@ -152,7 +154,7 @@ export const QuizDetail = () => {
             currentQ={currentQ}
             setCurrentQ={setCurrentQ}></RightContent>
         </div>
-      </div>
+      </div>}
       <ModalResult
         handleClose={handleClose}
         show={show}
