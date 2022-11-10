@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
+  // import Lightbox from "react-awesome-lightbox";
+
 import { postCreateUser } from "../../../service/apiservice";
 const ModalCreateUser = (pros) => {
   const { show, handleClose, fetchUserWithPaginate } = pros;
