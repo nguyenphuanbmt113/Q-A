@@ -1,8 +1,7 @@
+import _ from "lodash";
 import React, { useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Select from "react-select";
-import _ from "lodash";
 import { toast } from "react-toastify";
 import { putUpdateQuizWithId } from "../../../service/apiservice";
 const options = [
@@ -12,12 +11,19 @@ const options = [
 ];
 const ModalUpdateQuiz = (props) => {
   const { show, handleClose, dataUpdateQuiz, fetchQuiz } = props;
+  console.log("dataUpdateQuiz", dataUpdateQuiz);
   const [name, setName] = useState("");
   const [previewImg, setPrevImg] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
-  const [type, setType] = useState("");
-  const handleChangeFile = (e) => {
+  console.log("image", image);
+  const [type, setType] = useState({
+    value: "",
+    label: "",
+  });
+  console.log("type", type);
+  const handleUpload = (e) => {
+    console.log("abs");
     if (e.target && e.target.files && e.target.files[0]) {
       setPrevImg(URL.createObjectURL(e.target.files[0]));
       setImage(e.target.files[0]);
@@ -31,6 +37,10 @@ const ModalUpdateQuiz = (props) => {
       setDescription(dataUpdateQuiz.description);
       setPrevImg(`data:image/jpeg;base64,${dataUpdateQuiz.image}`);
       setType(dataUpdateQuiz.difficulty);
+      setType({
+        value: dataUpdateQuiz.difficulty,
+        label: dataUpdateQuiz.difficulty,
+      });
       setImage("");
     }
   }, [dataUpdateQuiz]);
@@ -79,25 +89,18 @@ const ModalUpdateQuiz = (props) => {
                 <label className="form-label mb-2">Select Types</label>
                 <Select
                   defaultValue={type}
-                  value=""
+                  value={type}
                   onChange={setType}
                   options={options}
-                  placeholder="Quiz Style"
-                  selected
+                  // placeholder="Quiz Style"
                 />
               </div>
               <div className="col-6 mt-5">
-                <label
-                  className="form-label px-2 py-2 bg-green-500 text-white"
-                  htmlFor="uploadfile">
-                  <div>Upload File</div>
-                </label>
                 <input
                   type="file"
                   className="form-control"
-                  id="uploadfile"
-                  onChange={(e) => handleChangeFile(e)}
-                  hidden
+                  onChange={(e) => handleUpload(e)}
+                  // hidden
                 />
               </div>
               <label>Image Preview:</label>
@@ -116,14 +119,6 @@ const ModalUpdateQuiz = (props) => {
             </div>
           </div>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={() => handleUpdateQuiz()}>
-            Update
-          </Button>
-        </Modal.Footer>
       </Modal>
     </>
   );

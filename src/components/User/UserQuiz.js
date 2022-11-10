@@ -16,11 +16,13 @@ export const UserQuiz = () => {
     }
   };
   return (
-    <div className="mt-5 max-w-[1400px] mx-auto px-3 grid grid-cols-2 sm:grid-cols-4 gap-5">
+    <div className="mt-5 max-w-[1400px] mx-auto px-3 grid grid-cols-2 gap-4 md:grid-cols-4">
       {arrQuiz.length > 0 &&
         arrQuiz.map((item, index) => {
           return (
-            <div className="card rounded-lg relative" key={index}>
+            <div
+              className="card relative group overflow-hidden shadow-lg"
+              key={index}>
               <div className="h-[250px]">
                 <img
                   src={`data:image/jpeg;base64,${item.image}`}
@@ -28,8 +30,8 @@ export const UserQuiz = () => {
                   alt="..."
                 />
               </div>
-              <div className="absolute inset-0 bg-black/60 z-[0]"></div>
-              <div className="card-body flex flex-col absolute bottom-1 text-white">
+              <div className="absolute inset-0 bg-black/60 z-[0] opacity-0 group-hover:opacity-100 transition-all"></div>
+              <div className="card-body flex flex-col absolute bottom-1 text-white opacity-0 group-hover:opacity-100 transition-all">
                 <h5 className="card-title">Quiz {index + 1}</h5>
                 <p className="card-text">{item.description}</p>
                 <div className="mt-auto rounded-sm">

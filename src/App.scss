@@ -242,3 +242,7 @@ $highlight-color: #dee2ec;
     transform: rotate(360deg);
   }
 }
+.navbar-nav a:hover {
+    color: white !important;
+    opacity: 0.8;
+}

@@ -27,7 +27,7 @@ export const Intro = () => {
             className="object-cover rounded-lg h-[300px]"
           />
         </div>
-        <div className="text-center flex justify-center flex-col mt-4 max-w-[600px] mx-auto">
+        <div className="text-center flex justify-center flex-col mt-4 max-w-[650px] mx-auto">
           <div className="text-3xl font-bold mb-2 text-blue-500">
             Study help made for you{" "}
           </div>

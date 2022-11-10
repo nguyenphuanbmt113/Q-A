@@ -117,7 +117,7 @@ export const SignIn = () => {
                 {errors?.password?.message}
               </p>
               <div
-                className="absolute top-[50%] right-[10px] translate-y-1/2"
+                className="absolute top-[50%] right-[10px]"
                 onClick={() => handleShow()}>
                 {show ? (
                   <AiOutlineEye size="20px"></AiOutlineEye>
