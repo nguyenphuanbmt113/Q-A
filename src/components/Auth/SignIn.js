@@ -13,7 +13,6 @@ import { loginUser } from "../../service/apiservice";
 export const SignIn = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log("location", location);
   const dispath = useDispatch();
   const schema = yup
     .object({

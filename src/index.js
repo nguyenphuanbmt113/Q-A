@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
-import reportWebVitals from "./reportWebVitals";
 import "./index.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router } from "react-router-dom";
@@ -14,16 +13,12 @@ import "react-awesome-lightbox/build/style.css";
 
 let persistor = persistStore(store);
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <Router>
-          <App />
-        </Router>
-      </PersistGate>
-    </Provider>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <Router>
+        <App />
+      </Router>
+    </PersistGate>
+  </Provider>,
   document.getElementById("root")
 );
-
-reportWebVitals();

@@ -2,62 +2,72 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
-  // import Lightbox from "react-awesome-lightbox";
-
+// import Lightbox from "react-awesome-lightbox";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { postCreateUser } from "../../../service/apiservice";
+import useFilePreview from "../../../customHook/useImagePreview";
+import { useEffect } from "react";
 const ModalCreateUser = (pros) => {
   const { show, handleClose, fetchUserWithPaginate } = pros;
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [username, setUserName] = useState("");
-  const [previewImg, setPrevImg] = useState("");
-  const [img, setImg] = useState("");
-  const [role, setRole] = useState("User");
-
-  const handleUpload = (e) => {
-    if (e.target && e.target.files && e.target.files[0]) {
-      setPrevImg(URL.createObjectURL(e.target.files[0]));
-      setImg(e.target.files[0]);
-    } else {
-      setImg("");
-    }
-  };
-  const validateEmail = (email) => {
-    return String(email)
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
-  };
-  const handleSubmitCreateUser = async (e) => {
-    //valid data
-    let isValidEmail = validateEmail(email);
-    if (!isValidEmail) {
-      toast.error("invalid email");
-      return;
-    }
-    if (!password) {
-      toast.error("password is emptied");
-      return;
-    }
-    //call api
-
-    let data = await postCreateUser(email, password, username, role, img);
+  const schema = yup
+    .object({
+      email: yup.string().required("No email provided."),
+      password: yup.string().required("No password provided."),
+      username: yup.string().required("No username provided."),
+      role: yup.string().required("No role provided."),
+      file: yup.mixed().required("A file is required"),
+    })
+    .required();
+  const { register, reset, handleSubmit, watch, formState } = useForm({
+    defaultValues: {
+      role: "User",
+    },
+    resolver: yupResolver(schema),
+    mode: "onChange",
+  });
+  const { errors, isSubmitting, isValid } = formState;
+  console.log("errors", errors);
+  const file = watch("file");
+  console.log("file", file);
+  const [imgPreview] = useFilePreview(file);
+  console.log("imgPreview", imgPreview);
+  const onSubmit = async (form) => {
+    let data = await postCreateUser(
+      form.email,
+      form.password,
+      form.username,
+      form.role,
+      form.file[0]
+    );
     if (data?.EC === 0) {
       toast.success(data.EM);
       await fetchUserWithPaginate(1);
       handleClose();
+      reset({
+        email: "",
+        password: "",
+        username: "",
+        role: "",
+        file: "",
+      });
     }
     if (data?.EC !== 0) {
       toast.error(data.EM);
     }
-    setEmail("");
-    setPassword("");
-    setUserName("");
-    setPrevImg("");
-    setRole("User");
   };
+  useEffect(() => {
+    const keypress = async (e) => {
+      if (e.key === "Enter") {
+        handleSubmit(onSubmit)();
+      }
+    };
+    window.addEventListener("keypress", keypress);
+    return () => {
+      window.removeEventListener("keypress", keypress);
+    };
+  }, []);
   return (
     <>
       <Modal
@@ -76,38 +86,40 @@ const ModalCreateUser = (pros) => {
               <input
                 type="email"
                 className="form-control"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                {...register("email")}
               />
+              <p className="text-red-500 text-md">{errors?.email?.message}</p>
             </div>
             <div className="col-6">
               <label className="form-label">Password</label>
               <input
                 type="password"
                 className="form-control"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                {...register("password")}
               />
+              <p className="text-red-500 text-md">
+                {errors?.password?.message}
+              </p>
             </div>
             <div className="col-6">
               <label className="form-label">UserName</label>
               <input
                 type="text"
                 className="form-control"
-                value={username}
-                onChange={(e) => setUserName(e.target.value)}
+                {...register("username")}
               />
+              <p className="text-red-500 text-md">
+                {errors?.username?.message}
+              </p>
             </div>
             <div className="col-6">
               <label className="form-label">Role</label>
-              <select
-                value={role}
-                className="form-select"
-                onChange={(e) => setRole(e.target.value)}>
+              <select className="form-select" {...register("role")}>
                 <option selected value="User">
                   User
                 </option>
                 <option>Admin</option>
+                <p className="text-red-500 text-md">{errors?.role?.message}</p>
               </select>
             </div>
             <div className="col-6">
@@ -115,17 +127,15 @@ const ModalCreateUser = (pros) => {
               <input
                 type="file"
                 className="form-control"
-                onChange={(e) => handleUpload(e)}
+                {...register("file")}
               />
+              <p className="text-red-500 text-md">{errors?.file?.message}</p>
             </div>
             <label>Image Preview:</label>
             <div className="col-2 img-preview p-2">
-              <img
-                src={previewImg}
-                alt=""
-                className="img-cover"
-                // value={password}
-              />
+              {imgPreview && (
+                <img src={imgPreview} alt="" className="img-cover" />
+              )}
             </div>
           </form>
         </Modal.Body>
@@ -133,7 +143,7 @@ const ModalCreateUser = (pros) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={(e) => handleSubmitCreateUser(e)}>
+          <Button variant="primary" onClick={handleSubmit(onSubmit)}>
             Save User
           </Button>
         </Modal.Footer>
