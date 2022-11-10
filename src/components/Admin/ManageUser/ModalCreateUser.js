@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
-// import Lightbox from "react-awesome-lightbox";
+import Lightbox from "react-awesome-lightbox";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -11,6 +11,7 @@ import useFilePreview from "../../../customHook/useImagePreview";
 import { useEffect } from "react";
 const ModalCreateUser = (pros) => {
   const { show, handleClose, fetchUserWithPaginate } = pros;
+  const [showImage, setShowImage] = useState(false);
   const schema = yup
     .object({
       email: yup.string().required("No email provided."),
@@ -31,7 +32,7 @@ const ModalCreateUser = (pros) => {
   console.log("errors", errors);
   const file = watch("file");
   console.log("file", file);
-  const [imgPreview] = useFilePreview(file);
+  const [imgPreview, ...a] = useFilePreview(file);
   console.log("imgPreview", imgPreview);
   const onSubmit = async (form) => {
     let data = await postCreateUser(
@@ -134,7 +135,12 @@ const ModalCreateUser = (pros) => {
             <label>Image Preview:</label>
             <div className="col-2 img-preview p-2">
               {imgPreview && (
-                <img src={imgPreview} alt="" className="img-cover" />
+                <img
+                  src={imgPreview}
+                  alt=""
+                  className="img-cover"
+                  onClick={() => setShowImage(true)}
+                />
               )}
             </div>
           </form>
@@ -148,6 +154,11 @@ const ModalCreateUser = (pros) => {
           </Button>
         </Modal.Footer>
       </Modal>
+      {showImage && (
+        <Lightbox
+          image={imgPreview}
+          onClose={() => setShowImage(false)}></Lightbox>
+      )}
     </>
   );
   //sss

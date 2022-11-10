@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 
 const useFilePreview = (file) => {
   const [imgSrc, setImgSrc] = useState(null);
+  const handleClose = () => {
+    setImgSrc(null);
+  };
   useEffect(() => {
     if (file && file[0]) {
       const newUrl = URL.createObjectURL(file[0]);
@@ -12,6 +15,6 @@ const useFilePreview = (file) => {
       setImgSrc(null);
     }
   }, [file]);
-  return [imgSrc];
+  return [imgSrc, handleClose];
 };
 export default useFilePreview;
