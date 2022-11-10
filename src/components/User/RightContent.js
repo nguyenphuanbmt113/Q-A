@@ -3,19 +3,20 @@ import { CountDowm } from "./CountDowm";
 // import { CountDowm } from "./CountDowm";
 
 export const RightContent = (props) => {
-  const { dataQuiz, setIndex, currentQ, setCurrentQ } = props;
+  const { dataQuiz, setIndex, currentQ, setCurrentQ, index } = props;
   const refdiv = useRef([]);
   const handleSelectQuestion = (i, question) => {
     const classList = ["question"];
     const isSelected = question.answers.find(
       (answer) => answer.isSelected === true
     );
-    const isClicked = currentQ === i;
-    if (isSelected) {
-      classList.push("bg-red-500 text-white");
-    }
+    // const isClicked = currentQ === i;
+    const isClicked = index === i;
     if (isClicked) {
-      classList.push("bg-gray-400 text-black");
+      classList.push("isClick");
+    }
+    if (isSelected) {
+      classList.push("isSelect");
     }
     return classList.join(" ");
   };
@@ -40,7 +41,7 @@ export const RightContent = (props) => {
                 className={`${handleSelectQuestion(
                   i,
                   item
-                )} border w-10 h-10 rounded-full text-black flex items-center justify-center text-lg`}
+                )} border w-10 h-10 rounded-full flex items-center justify-center text-lg`}
                 key={`question-${i + 1}`}
                 onClick={() => handleClick(i)}>
                 {i + 1}

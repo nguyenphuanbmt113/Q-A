@@ -110,50 +110,54 @@ export const QuizDetail = () => {
   };
   return (
     <>
-      {dataQuiz.length === 0 ? <div>Dont have any questions</div> :
-      <div className="flex gap-5">
-        <div className="left-content border-gray-300 w-[70%] border-2 p-3">
-          <div className="title text-xl bold capitalize">
-            Quiz {id}: {location?.state?.quizTitle}
+      {dataQuiz.length === 0 ? (
+        <div>Dont have any questions</div>
+      ) : (
+        <div className="flex gap-5">
+          <div className="left-content border-gray-300 w-[70%] border-2 p-3">
+            <div className="title text-xl bold capitalize">
+              Quiz {id}: {location?.state?.quizTitle}
+            </div>
+            <hr></hr>
+            <div className="ques-body">
+              <img src="" alt="" />
+            </div>
+            <div className="ques-content">
+              <Questions
+                data={dataQuiz && dataQuiz.length > 0 ? dataQuiz[index] : []}
+                index={index}
+                handleCheckBox={handleCheckBox}></Questions>
+            </div>
+            <div className="ques-footer flex gap-3 mt-4">
+              <button
+                className="px-2 py-1 bg-blue-500 text-white disabled:hidden"
+                onClick={handlePrev}
+                disabled={index === 0 ? true : false}>
+                Prev
+              </button>
+              <button
+                className="px-2 py-1 bg-red-500 text-white disabled:hidden"
+                onClick={handleNext}
+                disabled={index === dataQuiz.length - 1 ? true : false}>
+                Next
+              </button>
+              <button
+                className="px-2 py-1 bg-yellow-500 text-white"
+                onClick={() => handleFinishQuiz()}>
+                Finish
+              </button>
+            </div>
           </div>
-          <hr></hr>
-          <div className="ques-body">
-            <img src="" alt="" />
-          </div>
-          <div className="ques-content">
-            <Questions
-              data={dataQuiz && dataQuiz.length > 0 ? dataQuiz[index] : []}
+          <div className="right-content border-gray-300 border-2 w-[30%] p-3">
+            <RightContent
+              dataQuiz={dataQuiz}
+              setIndex={setIndex}
               index={index}
-              handleCheckBox={handleCheckBox}></Questions>
-          </div>
-          <div className="ques-footer flex gap-3 mt-4">
-            <button
-              className="px-2 py-1 bg-blue-500 text-white disabled:hidden"
-              onClick={handlePrev}
-              disabled={index === 0 ? true : false}>
-              Prev
-            </button>
-            <button
-              className="px-2 py-1 bg-red-500 text-white disabled:hidden"
-              onClick={handleNext}
-              disabled={index === dataQuiz.length - 1 ? true : false}>
-              Next
-            </button>
-            <button
-              className="px-2 py-1 bg-yellow-500 text-white"
-              onClick={() => handleFinishQuiz()}>
-              Finish
-            </button>
+              currentQ={currentQ}
+              setCurrentQ={setCurrentQ}></RightContent>
           </div>
         </div>
-        <div className="right-content border-gray-300 border-2 w-[30%] p-3">
-          <RightContent
-            dataQuiz={dataQuiz}
-            setIndex={setIndex}
-            currentQ={currentQ}
-            setCurrentQ={setCurrentQ}></RightContent>
-        </div>
-      </div>}
+      )}
       <ModalResult
         handleClose={handleClose}
         show={show}

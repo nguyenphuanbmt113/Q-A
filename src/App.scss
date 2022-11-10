@@ -243,6 +243,14 @@ $highlight-color: #dee2ec;
   }
 }
 .navbar-nav a:hover {
-    color: white !important;
-    opacity: 0.8;
+  color: white !important;
+  opacity: 0.8;
+}
+.isClick {
+  background: gray;
+  color: white;
+}
+.isSelect {
+  background: red;
+  color: white;
 }

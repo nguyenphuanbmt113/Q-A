@@ -109,9 +109,11 @@ export const UpdateQA = () => {
     if (index > -1) {
       questionClone[index].imageFile = e.target.files[0];
       questionClone[index].imageName = e.target.files[0].name;
+      console.log("?questionClone:", questionClone);
       setQuestions(questionClone);
     }
   };
+  // console.log("?questions:", questions);
   const handleAnswerQuestion = (type, answerId, questionId, value) => {
     let questionClone = _.cloneDeep(questions);
     const index = questionClone.findIndex((item) => {
@@ -143,25 +145,28 @@ export const UpdateQA = () => {
       setIsPreview(true);
     }
   };
+
+  function getBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  }
   const handleSubmitQuestionForQuiz = async () => {
-    const toBase64 = (file) => {
-      new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = (error) => reject(error);
-      });
-    };
     let questionClone = _.cloneDeep(questions);
     for (let i = 0; i < questionClone.length; i++) {
       if (questionClone[i].imageFile) {
-        questionClone[i].imageFile = await toBase64(questionClone[i].imageFile);
+        let result = await getBase64(questionClone[i].imageFile);
+        questionClone[i].imageFile = result;
       }
     }
     let res = await postUpsertWithAQA({
       quizId: selectQuiz.value,
       questions: questionClone,
     });
+    console.log("questionClone:", questionClone);
     if (res.EC === 0) {
       toast.success(res.EM);
       setSelectQuiz({});
@@ -280,7 +285,7 @@ export const UpdateQA = () => {
                           className="form-control"
                           id={`${question.id}`}
                           onChange={(e) => handleOnChangeFile(question.id, e)}
-                          hidden
+                          // hidden
                         />
                       </div>
                     </div>
