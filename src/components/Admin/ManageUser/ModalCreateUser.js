@@ -153,6 +153,7 @@ const ModalCreateUser = (pros) => {
             Save User
           </Button>
         </Modal.Footer>
+        {isSubmitting && <div className="loading"></div>}
       </Modal>
       {showImage && (
         <Lightbox
