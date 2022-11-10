@@ -9,7 +9,6 @@ export const QuizDetail = () => {
   const { id } = useParams();
   const location = useLocation();
   const [dataQuiz, setDataQuiz] = useState([]);
-  console.log("dataQuiz", dataQuiz)
   const [show, setShow] = useState(false);
   const [index, setIndex] = useState(0);
   const [currentQ, setCurrentQ] = useState(0);

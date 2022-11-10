@@ -163,7 +163,6 @@ export const UpdateQA = () => {
       questions: questionClone,
     });
     if (res.EC === 0) {
-      console.log("res", res);
       toast.success(res.EM);
       setSelectQuiz({});
       setQuestions([]);
@@ -212,7 +211,6 @@ export const UpdateQA = () => {
             newQ.push(data);
           }
           setQuestions(newQ);
-          console.log("newQ", newQ);
         }
       };
       fetchGetDataQ();

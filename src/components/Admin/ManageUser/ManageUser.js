@@ -1,12 +1,38 @@
 import React, { useEffect, useState } from "react";
+import { CSVLink } from "react-csv";
 import { AiOutlineUserAdd } from "react-icons/ai";
-import { getUserWithPaginate } from "../../../service/apiservice";
+import { getAllUser, getUserWithPaginate } from "../../../service/apiservice";
 import ModalCreateUser from "./ModalCreateUser";
 import ModalDelete from "./ModalDelete";
 import ModalUpdateUser from "./ModalUpdateUser";
 import { TableUser } from "./TableUser";
 export const ManageUser = () => {
+  const [dataCsv, setDataCsv] = useState([]);
+  // const csvData = [
+  //   ["firstname", "lastname", "email"],
+  //   ["Ahmed", "Tomi", "ah@smthing.co.com"],
+  //   ["Raed", "Labes", "rl@smthing.co.com"],
+  //   ["Yezzi", "Min l3b", "ymin@cocococo.com"],
+  // ];
+  const handleExport = async () => {
+    const result = allUser.map((item) => {
+      return {
+        email: item.email,
+        username: item.username,
+        role: item.role,
+      };
+    });
+    setDataCsv(result);
+  };
+  // const csvData = [
+  //   { firstname: "Ahmed", lastname: "Tomi", email: "ah@smthing.co.com" },
+  //   { firstname: "Raed", lastname: "Labes", email: "rl@smthing.co.com" },
+  //   { firstname: "Yezzi", lastname: "Min l3b", email: "ymin@cocococo.com" },
+  // ];
   const [listUser, setListUser] = useState([]);
+  const [allUser, setAllUser] = useState([]);
+  console.log("allUser", allUser);
+  console.log("listUser", listUser);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [showModalDelete, setShowModalDelete] = useState(false);
@@ -17,6 +43,17 @@ export const ManageUser = () => {
   useEffect(() => {
     fetchUserWithPaginate(page);
   }, [page]);
+  //fetching data all user
+  const fetchAllUser = async () => {
+    const res = await getAllUser();
+    console.log("res", res);
+    if (res.EC === 0) {
+      setAllUser(res?.DT);
+    }
+  };
+  useEffect(() => {
+    fetchAllUser();
+  }, []);
   // fetching User With Paginate
   const fetchUserWithPaginate = async (page) => {
     const res = await getUserWithPaginate(page);
@@ -46,17 +83,32 @@ export const ManageUser = () => {
     setShowModalDelete(true);
     setDataDelete(user);
   };
+
   return (
     <>
       <div className="text-center underline text-xl mb-3 font-serif font-medium">
         Manage User
       </div>
-      <button
-        className="px-3 py-2 bg-green-500 text-white flex items-center gap-2 font-medium my-3 rounded-lg"
-        onClick={() => setShowModalCreate(true)}>
-        <AiOutlineUserAdd size="25px"></AiOutlineUserAdd>
-        <div>Create User</div>
-      </button>
+      <div className="my-3 flex items-center justify-between">
+        <button
+          className="px-3 py-2 bg-green-500 text-white flex items-center gap-2 font-medium rounded-lg"
+          onClick={() => setShowModalCreate(true)}>
+          <AiOutlineUserAdd size="25px"></AiOutlineUserAdd>
+          <div>Create User</div>
+        </button>
+        <div className="flex gap-3">
+          <button
+            className="px-3 py-2 bg-yellow-500 text-white rounded-md"
+            onClick={() => handleExport()}>
+            <CSVLink data={dataCsv} className="text-white">
+              Exports
+            </CSVLink>
+          </button>
+          <button className="px-3 py-2 bg-gray-500 text-white rounded-md">
+            Import
+          </button>
+        </div>
+      </div>
       <TableUser
         listUser={listUser}
         totalPages={totalPages}

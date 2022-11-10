@@ -29,11 +29,8 @@ const ModalCreateUser = (pros) => {
     mode: "onChange",
   });
   const { errors, isSubmitting, isValid } = formState;
-  console.log("errors", errors);
   const file = watch("file");
-  console.log("file", file);
-  const [imgPreview, ...a] = useFilePreview(file);
-  console.log("imgPreview", imgPreview);
+  const [imgPreview] = useFilePreview(file);
   const onSubmit = async (form) => {
     let data = await postCreateUser(
       form.email,

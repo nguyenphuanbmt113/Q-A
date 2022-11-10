@@ -35,7 +35,6 @@ export const SignUp = () => {
     setShow(!show);
   };
   const onSubmit = async (form) => {
-    console.log("form", form);
     const res = await postRegister(form.email, form.username, form.password);
     if (res.EC === 0) {
       toast.success(res.EM);

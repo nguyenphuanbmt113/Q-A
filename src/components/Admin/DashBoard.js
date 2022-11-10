@@ -13,8 +13,6 @@ import { getOverView } from "../../service/apiservice";
 export const DashBoard = () => {
   const [data, setData] = useState([]);
   const [overView, setOverview] = useState([]);
-  console.log("overView", overView);
-  // console.log("data", data);
   const dataDashBoard = [
     {
       namedash: "Total User",
@@ -38,7 +36,6 @@ export const DashBoard = () => {
   }, []);
   const fetchOverView = async () => {
     const res = await getOverView();
-    console.log("res", res);
     if (res.EC === 0) {
       setOverview(res.DT);
       const result = dataDashBoard.map((item) => {
@@ -56,7 +53,6 @@ export const DashBoard = () => {
         }
         return item;
       });
-      console.log("result", result);
       setData(result);
     }
   };
